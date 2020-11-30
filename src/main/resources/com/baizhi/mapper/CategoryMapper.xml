@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baizhi.dao.CategoryMapper">
+  <!--查询所有类别信息-->
+  <resultMap id="myCate" type="Category">
+    <id property="id" column="cid"/>
+    <result property="name" column="cName"/>
+    <result property="parentId" column="cParentId"/>
+    <result property="levels" column="cLevels"/>
+    <collection property="cateList" ofType="Category">
+      <id property="id" column="did"/>
+      <result property="name" column="dName"/>
+      <result property="parentId" column="dParentId"/>
+      <result property="levels" column="dLevels"/>
+    </collection>
+  </resultMap>
+  <select id="queryAll" resultMap="myCate">
+    select c.id cid,c.name cName,c.levels cLevels,c.parent_id cParentId,
+           d.id did,d.name dName,d.levels dLevels,d.parent_id dParentId
+    from yx_category c left join yx_category d
+    on d.parentId = c.id where c.levels = 1
+  </select>
+
+  <resultMap id="cate" type="com.baizhi.po.CategoryPO">
+    <id property="id" column="cid"/>
+    <result property="cateName" column="cName"/>
+    <result property="levels" column="cLevels"/>
+    <result property="parentId" column="cParentId"/>
+    <collection property="categoryList" ofType="com.baizhi.po.CategoryPO">
+      <id property="id" column="did"/>
+      <result property="cateName" column="dName"/>
+      <result property="levels" column="dLevels"/>
+      <result property="parentId" column="dParentId"/>
+    </collection>
+  </resultMap>
+  <select id="queryAllCategory" resultMap="cate">
+    select c.id cid,c.name cName,c.levels cLevels,c.parent_id cParentId,
+           d.id did,d.name dName,d.levels dLevels,d.parent_id dParentId
+    from yx_category c left join yx_category d
+    on c.id=d.parent_id where c.levels = 1
+  </select>
+
+</mapper>
