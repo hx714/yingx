@@ -24,7 +24,8 @@ public class CategoryTests {
     public void testQueryAll(){
         List<Category> categories = categoryService.queryByTwo("3", 1, 3);
         categories.forEach(category -> System.out.println(category));
-
+        int s = 10;
+        int b = 20;
        /*List<Category> categories = categoryService.queryByOne(2, 3);
        System.out.println(categories);*/
         /*List<Category> categories = categoryService.queryAll();
